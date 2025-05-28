@@ -1,0 +1,36 @@
+from google.colab import drive
+
+drive.mount("/content/drive")
+%%capture
+# Extract data into machine
+!unzip /content/drive/MyDrive/week4_data.zip -d /content/week4_data
+DATA_DIR = "/content/week4_data/data"
+%%capture
+!sudo apt-get install libfftw3-dev libicu-dev libsndfile1-dev libqt5core5a
+%pip install git+https://github.com/MScEcologyAndDataScienceUCL/BIOS0032_AI4Environment.git umap-learn
+%pip install --no-dependencies batdetect2
+import glob
+import os
+from time import perf_counter
+
+import ipywidgets
+import librosa
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import tensorflow_hub as hub
+from IPython.display import Audio
+from sklearn.metrics import (
+    ConfusionMatrixDisplay,
+    classification_report,
+    confusion_matrix
+)
+from sklearn.preprocessing import StandardScaler
+from tqdm import tqdm
+from umap import UMAP
+
+from bios0032utils.bioacoustics import evaluate_detection, plotting
+from bios0032utils.bioacoustics.classification import (
+    load_bat_call_audio_data  
+)
